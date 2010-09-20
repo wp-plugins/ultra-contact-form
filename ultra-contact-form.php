@@ -43,6 +43,9 @@ function ucf_the_content( $content ) {
 		$form_body = $form[ 'body' ];
 		$form_body = preg_replace( '/\[name\]/', '<input type="text" name="name" />', $form_body );
 		$form_body = preg_replace( '/\[mail\]/', '<input type="text" name="mail" />', $form_body );
+		
+		$form_body = preg_replace( '/\[text (.*)\]/', '<input type="text" name="$1" />', $form_body );
+		$form_body = preg_replace( '/\[textarea (.*)\]/', '<textarea name="$1"></textarea>', $form_body );
 		$form_body = preg_replace( '/\[submit ?"(.*)"\]/', '<input type="submit" value="$1" />', $form_body );
 		
 		$html = array( $form_head, $form_body, $form_foot );
@@ -115,10 +118,18 @@ function ucf_admin_init() {
 			if ( $basename != plugin_basename( __FILE__ ) ) {
 			} else {
 				$plugins[ $basename ][ 'Description' ] = __( $plugins[ plugin_basename( __FILE__ ) ][ 'Description' ], 'ucf_plugin' );
-				//$plugins[ $basename ][ 'Description' ].= '<br />Some Icons by <a href="http://p.yusukekamiyamane.com/">Yusuke Kamiyamane</a>.';
+				$plugins[ $basename ][ 'Description' ].= '<br />Some Icons by <a href="http://p.yusukekamiyamane.com/">Yusuke Kamiyamane</a>.';
 			}
 		}
 		return $plugins;
+	}
+	
+	add_action( 'admin_notices', 'ucf_notice' );
+	function ucf_notice() {
+		echo '<div class="updated fade"><p>';
+		echo '<strong>Ultra Contact Form</strong>: ';
+		echo __( 'This plugin does not work correctly.', 'ucf_plugin' );
+		echo "</p></div>";
 	}
 }
 
