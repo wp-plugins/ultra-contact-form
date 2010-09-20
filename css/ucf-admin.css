@@ -1,0 +1,20 @@
+
+
+
+#icon-ucf-inbox, #icon-page {
+	background: url( "../images/ucf-inbox-icon.png" ) no-repeat scroll 2px 2px transparent;
+}
+#icon-ucf-form-setting, #icon-page {
+	background: url( "../images/ucf-form-setting-icon.png" ) no-repeat scroll 2px 2px transparent;
+}
+#icon-ucf-preference, #icon-page {
+	background: url( "../images/ucf-preference-icon.png" ) no-repeat scroll 2px 2px transparent;
+}
+
+
+#ucf_form_name {
+	
+}
+#ucf_form_body {
+	width: 500px;
+}

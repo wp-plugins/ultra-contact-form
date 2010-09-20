@@ -1,0 +1,31 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ultra Contact Form\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-05-18 23:31+0900\n"
+"PO-Revision-Date: 2010-09-17 20:05+0900\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_c\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SearchPath-0: ultra-contact-form\n"
+
+msgid "User-friendly contact form and Intuitive inbox."
+msgstr "ユーザーフレンドリーなコンタクトフォームと直感的な受信箱"
+
+msgid "Inbox"
+msgstr "受信箱"
+
+msgid "Form Setting"
+msgstr "フォーム設定"
+
+msgid "Preference"
+msgstr "環境設定"
+
