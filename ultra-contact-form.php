@@ -4,7 +4,7 @@ Plugin Name: Ultra Contact Form
 Plugin URI: http://wordpress.org/extend/plugins/ultra-contact-form/
 Version: 0.0
 Description: User-friendly contact form and Intuitive inbox.
-Author: ColorChips Co.,Ltd.
+Author: COLORCHIPS
 Author URI: http://www.colorchips.co.jp/
 */
 

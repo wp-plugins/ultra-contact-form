@@ -9,7 +9,7 @@ User-friendly contact form and Intuitive inbox.
 
 == Description ==
 
-User-friendly contact form and Intuitive inbox.
+This plugin does not work correctly. :-(
 
 == Installation ==
 
