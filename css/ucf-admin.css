@@ -4,8 +4,9 @@
 #icon-ucf-inbox, #icon-page {
 	background: url( "../images/ucf-inbox-icon.png" ) no-repeat scroll 2px 2px transparent;
 }
-#icon-ucf-form-setting, #icon-page {
+#icon-ucf-form_setting, #icon-page {
 	background: url( "../images/ucf-form-setting-icon.png" ) no-repeat scroll 2px 2px transparent;
+	background: url( "/wp-admin/images/icons32.png?ver=20100531" ) no-repeat scroll -492px -5px transparent;
 }
 #icon-ucf-preference, #icon-page {
 	background: url( "../images/ucf-preference-icon.png" ) no-repeat scroll 2px 2px transparent;
