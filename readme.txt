@@ -13,9 +13,9 @@ This plugin does not work correctly. :-(
 
 == Installation ==
 
-Upload the this plugin to your blog,
-Upload the ultra-contact-form plugin to your blog, Activate it.
+Upload the this plugin to your blog, Activate it.
 
 == Changelog ==
 
-
+= 0.0 =
+* Initial release.
