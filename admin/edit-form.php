@@ -15,22 +15,22 @@ if ( ! empty($form_id) ) {
 	$nonce_action = 'add-ucf-form';
 }
 
-require_once('./includes/meta-boxes.php');
+require_once( UCF_PLUGIN_DIR_PATH . 'ucf-meta-boxes.php' );
 
-//add_meta_box('linksubmitdiv', __('Save'), 'link_submit_meta_box', 'link', 'side', 'core');
-//add_meta_box('linkcategorydiv', __('Categories'), 'link_categories_meta_box', 'link', 'normal', 'core');
-//add_meta_box('linktargetdiv', __('Target'), 'link_target_meta_box', 'link', 'normal', 'core');
-//add_meta_box('linkxfndiv', __('Link Relationship (XFN)'), 'link_xfn_meta_box', 'link', 'normal', 'core');
-//add_meta_box('linkadvanceddiv', __('Advanced'), 'link_advanced_meta_box', 'link', 'normal', 'core');
+add_meta_box( 'formnamediv', __( 'Name', 'ucf_plugin' ), array( 'UCF_Meta_Boxes', 'form_name_meta_box' ), 'ucf-form', 'normal', 'core' );
+add_meta_box( 'formtagdiv', __( 'Tag', 'ucf_plugin' ), array( 'UCF_Meta_Boxes', 'form_tag_meta_box' ), 'ucf-form', 'normal', 'core' );
+add_meta_box( 'formbodydiv', __( 'Body', 'ucf_plugin' ), array( 'UCF_Meta_Boxes', 'form_body_meta_box' ), 'ucf-form', 'normal', 'core' );
 
-do_action('add_meta_boxes', 'ucf-form', $form);
-do_action('add_meta_boxes_ucf-form', $form);
+add_meta_box( 'formsubmitdiv', __( 'Save', 'ucf_plugin' ), array( 'UCF_Meta_Boxes', 'form_submit_meta_box' ), 'ucf-form', 'side', 'core');
 
-do_action('do_meta_boxes', 'ucf-form', 'normal', $form);
-do_action('do_meta_boxes', 'ucf-form', 'advanced', $form);
-do_action('do_meta_boxes', 'ucf-form', 'side', $form);
+do_action( 'add_meta_boxes', 'ucf-form', $form );
+do_action( 'add_meta_boxes_ucf-form', $form );
 
-add_contextual_help($current_screen,
+do_action( 'do_meta_boxes', 'ucf-form', 'normal', $form );
+do_action( 'do_meta_boxes', 'ucf-form', 'advanced', $form );
+do_action( 'do_meta_boxes', 'ucf-form', 'side', $form );
+
+add_contextual_help( $current_screen,
 	'<p>' . __( 'You can add or edit links on this screen by entering information in each of the boxes. Only the link&#8217;s web address and name (the text you want to display on your site as the link) are required fields.' ) . '</p>' .
 	'<p>' . __( 'The boxes for link name, web address, and description have fixed positions, while the others may be repositioned using drag and drop. You can also hide boxes you don&#8217;t use in the Screen Options tab, or minimize boxes by clicking on the title bar of the box.' ) . '</p>' .
 	'<p>' . __( 'XFN stands for <a href="http://gmpg.org/xfn/" target="_blank">XHTML Friends Network</a>, which is optional. WordPress allows the generation of XFN attributes to show how you are related to the authors/owners of the site to which you are linking.' ) . '</p>' .
@@ -39,7 +39,7 @@ add_contextual_help($current_screen,
 	'<p>' . __( '<a href="http://wordpress.org/support/" target="_blank">Support Forums</a>' ) . '</p>'
 );
 
-//require_once ('admin-header.php');
+screen_meta($current_screen);
 
 ?>
 <div class="wrap">
@@ -65,8 +65,8 @@ wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 <div id="side-info-column" class="inner-sidebar">
 <?php
 
-do_action('submitlink_box');
-$side_meta_boxes = do_meta_boxes( 'form', 'side', $form );
+do_action( 'submitucf-form_box' );
+$side_meta_boxes = do_meta_boxes( 'ucf-form', 'side', $form );
 
 ?>
 </div>
@@ -74,35 +74,11 @@ $side_meta_boxes = do_meta_boxes( 'form', 'side', $form );
 <div id="post-body">
 <div id="post-body-content">
 
-<div id="namediv" class="stuffbox">
-<h3><label for="name"><?php _e( 'Name', 'ucf-plugin' ) ?></label></h3>
-<div class="inside">
-	<input type="text" name="name" size="30" tabindex="1" value="<?php echo esc_attr($form->name); ?>" id="name" />
-	<p><?php _e( 'Example: Contact Form', 'ucf-plugin' ); ?></p>
-</div>
-</div>
-
-<div id="addressdiv" class="stuffbox">
-<h3><label for="tag"><?php _e( 'Tag', 'ucf-plugin' ) ?></label></h3>
-<div class="inside">
-	<input type="text" name="tag" size="30" class="code" tabindex="1" value="<?php echo esc_attr($form->tag); ?>" id="tag" />
-	<p><?php _e( 'Example: ', 'ucf-plugin' ); ?></p>
-</div>
-</div>
-
-<div id="descriptiondiv" class="stuffbox">
-<h3><label for="body"><?php _e( 'Body', 'ucf-plugin' ) ?></label></h3>
-<div class="inside">
-	<input type="text" name="body" size="30" tabindex="1" value="<?php echo isset($form->body) ? esc_attr($form->body) : ''; ?>" id="body" />
-	<p><?php _e( 'TODO: ', 'ucf-plugin' ); ?></p>
-</div>
-</div>
-
 <?php
 
-//do_meta_boxes('link', 'normal', $form);
+do_meta_boxes('ucf-form', 'normal', $form);
 
-//do_meta_boxes('link', 'advanced', $form);
+do_meta_boxes('ucf-form', 'advanced', $form);
 
 if ( $form_id ) : ?>
 <input type="hidden" name="action" value="save" />

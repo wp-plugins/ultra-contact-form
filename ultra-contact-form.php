@@ -94,11 +94,12 @@ class Ultra_Contact_Form
 	
 	static function page_function( $name ) {
 		global $ucf_plugin_admin_menu;
+		global $current_screen;
 		$current_menu = $ucf_plugin_admin_menu[ $name ];
 		
 		switch ( $name ) {
 			case 'form-manager':
-				if ( isset( $_GET[ 'form_id' ] ) && $form = UCF_Form::get_form( $_GET[ 'form_id' ] ) ) {
+				if ( isset( $_REQUEST[ 'form_id' ] ) && $form = UCF_Form::get_form( $_REQUEST[ 'form_id' ] ) ) {
 					$title = __( 'Edit Form', 'ucf_plugin' );
 					include( dirname( __FILE__ ) . "/admin/form.php" );
 					break;
@@ -143,7 +144,7 @@ class Ultra_Contact_Form
 	}
 	
 	static function admin_scripts() {
-		wp_enqueue_script( 'ucf_admin_script', UCF_PLUGIN_DIR_URL . '/js/ucf-admin.js', array(), UCF_PLUGIN_VERSION, 'all' );
+		wp_enqueue_script( 'ucf_admin_script', UCF_PLUGIN_DIR_URL . '/js/ucf-admin.js', array( 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-sortable', 'jquery-form' ), UCF_PLUGIN_VERSION, 'all' );
 	}
 	
 	static function admin_styles() {

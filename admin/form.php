@@ -1,5 +1,4 @@
 <?php
-global $ucf_plugin_admin_menu;
 
 wp_reset_vars(array('action', 'cat_id', 'linkurl', 'name', 'image', 'description', 'visible', 'target', 'category', 'link_id', 'submit', 'order_by', 'links_show_cat_id', 'rating', 'rel', 'notes', 'linkcheck[]'));
 
