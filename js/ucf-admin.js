@@ -1,10 +1,7 @@
 (function($){
-	$.extend( {
-		ucf_admin : function() {
-			return this;
-		}
-	} );
 	$( function () {
-		var ucf_admin = $.ucf_admin();
+		
+		postboxes.add_postbox_toggles( 'ucf_form' );
+		
 	} );
 })(jQuery)

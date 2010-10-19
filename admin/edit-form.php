@@ -4,50 +4,20 @@ if ( !defined('ABSPATH') )
 	die('-1');
 
 if ( ! empty($form_id) ) {
-	$heading = sprintf( __( '<a href="%s">Links</a> / Edit Form' ), 'link-manager.php' );
-	$submit_text = __('Update Link');
-	$form_tag = '<form name="editform" id="editform" method="post" action="'.$current_menu[ 'action' ].'">';
-	$nonce_action = 'update-ucf-form_' . $form_id;
+	$form_tag = '<form name="editform" id="editform" method="post" action="'.$ucf_current_menu[ 'action' ].'">';
+	$nonce_action = 'update-ucf_form_' . $form_id;
 } else {
-	$heading = sprintf( __( '<a href="%s">Links</a> / Add New Link' ), 'link-manager.php' );
-	$submit_text = __('Add Link');
-	$form_tag = '<form name="addlink" id="addlink" method="post" action="'.$current_menu[ 'action' ].'">';
-	$nonce_action = 'add-ucf-form';
+	$form_tag = '<form name="addform" id="addform" method="post" action="'.$ucf_current_menu[ 'action' ].'">';
+	$nonce_action = 'add-ucf_form';
 }
-
-require_once( UCF_PLUGIN_DIR_PATH . 'ucf-meta-boxes.php' );
-
-add_meta_box( 'formnamediv', __( 'Name', 'ucf_plugin' ), array( 'UCF_Meta_Boxes', 'form_name_meta_box' ), 'ucf-form', 'normal', 'core' );
-add_meta_box( 'formtagdiv', __( 'Tag', 'ucf_plugin' ), array( 'UCF_Meta_Boxes', 'form_tag_meta_box' ), 'ucf-form', 'normal', 'core' );
-add_meta_box( 'formbodydiv', __( 'Body', 'ucf_plugin' ), array( 'UCF_Meta_Boxes', 'form_body_meta_box' ), 'ucf-form', 'normal', 'core' );
-
-add_meta_box( 'formsubmitdiv', __( 'Save', 'ucf_plugin' ), array( 'UCF_Meta_Boxes', 'form_submit_meta_box' ), 'ucf-form', 'side', 'core');
-
-do_action( 'add_meta_boxes', 'ucf-form', $form );
-do_action( 'add_meta_boxes_ucf-form', $form );
-
-do_action( 'do_meta_boxes', 'ucf-form', 'normal', $form );
-do_action( 'do_meta_boxes', 'ucf-form', 'advanced', $form );
-do_action( 'do_meta_boxes', 'ucf-form', 'side', $form );
-
-add_contextual_help( $current_screen,
-	'<p>' . __( 'You can add or edit links on this screen by entering information in each of the boxes. Only the link&#8217;s web address and name (the text you want to display on your site as the link) are required fields.' ) . '</p>' .
-	'<p>' . __( 'The boxes for link name, web address, and description have fixed positions, while the others may be repositioned using drag and drop. You can also hide boxes you don&#8217;t use in the Screen Options tab, or minimize boxes by clicking on the title bar of the box.' ) . '</p>' .
-	'<p>' . __( 'XFN stands for <a href="http://gmpg.org/xfn/" target="_blank">XHTML Friends Network</a>, which is optional. WordPress allows the generation of XFN attributes to show how you are related to the authors/owners of the site to which you are linking.' ) . '</p>' .
-	'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
-	'<p>' . __( '<a href="http://codex.wordpress.org/Links_Add_New_SubPanel" target="_blank">Documentation on Creating Links</a>' ) . '</p>' .
-	'<p>' . __( '<a href="http://wordpress.org/support/" target="_blank">Support Forums</a>' ) . '</p>'
-);
-
-screen_meta($current_screen);
 
 ?>
 <div class="wrap">
-<?php screen_icon(); ?>
+<?php screen_icon( $ucf_current_menu[ 'slug' ] ); ?>
 <h2><?php echo esc_html( $title ); ?></h2>
 
 <?php if ( isset( $_GET['added'] ) ) : ?>
-<div id="message" class="updated"><p><?php _e('Link added.'); ?></p></div>
+<div id="message" class="updated"><p><?php _e('Form added.'); ?></p></div>
 <?php endif; ?>
 
 <?php
@@ -66,7 +36,7 @@ wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 <?php
 
 do_action( 'submitucf-form_box' );
-$side_meta_boxes = do_meta_boxes( 'ucf-form', 'side', $form );
+do_meta_boxes( 'ucf_form', 'side', $form );
 
 ?>
 </div>
@@ -75,15 +45,13 @@ $side_meta_boxes = do_meta_boxes( 'ucf-form', 'side', $form );
 <div id="post-body-content">
 
 <?php
-
-do_meta_boxes('ucf-form', 'normal', $form);
-
-do_meta_boxes('ucf-form', 'advanced', $form);
+do_meta_boxes( 'ucf_form', 'normal', $form );
+do_meta_boxes( 'ucf_form', 'advanced', $form );
 
 if ( $form_id ) : ?>
 <input type="hidden" name="action" value="save" />
 <input type="hidden" name="form_id" value="<?php echo (int) $form_id; ?>" />
-<input type="hidden" name="order_by" value="<?php echo esc_attr($order_by); ?>" />
+<input type="hidden" name="order_by" value="<?php echo esc_attr( $order_by ); ?>" />
 <?php else: ?>
 <input type="hidden" name="action" value="add" />
 <?php endif; ?>

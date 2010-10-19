@@ -1,8 +1,4 @@
 <?php
-global $ucf_plugin_admin_menu;
-
-$new_form = $ucf_plugin_admin_menu[ 'form-add' ][ 'action' ];
-
 switch ($order_by) {
 	case 'order_id' :
 		$sqlorderby = 'id';
@@ -21,13 +17,13 @@ switch ($order_by) {
 		break;
 	case 'order_name' :
 	default :
-		$sqlorderby = 'name';
+		$sqlorderby = 'form_name';
 		break;
 } ?>
 
 <div class="wrap nosubsub">
-<?php screen_icon( $current_menu[ 'slug' ] ); ?>
-<h2><?php echo esc_html( $title ); ?> <a href="<?php echo $new_form; ?>" class="button add-new-h2"><?php echo esc_html_x('Add New', 'link'); ?></a> <?php
+<?php screen_icon( $ucf_current_menu[ 'slug' ] ); ?>
+<h2><?php echo esc_html( $title ); ?> <a href="<?php echo UCF_Form::get_add_form_link(); ?>" class="button add-new-h2"><?php echo esc_html_x('Add New', 'ucf_plugin'); ?></a> <?php
 if ( !empty($_GET['s']) )
 	printf( '<span class="subtitle">' . __('Search results for &#8220;%s&#8221;') . '</span>', esc_html( stripslashes($_GET['s']) ) ); ?>
 </h2>
@@ -44,7 +40,7 @@ if ( isset($_GET['deleted']) ) {
 
 <form class="search-form" action="" method="get">
 <p class="search-box">
-	<input type="hidden" name="page" value="<?php echo $current_menu[ 'slug' ]; ?>" />
+	<input type="hidden" name="page" value="<?php echo $ucf_current_menu[ 'slug' ]; ?>" />
 	<label class="screen-reader-text" for="link-search-input"><?php _e( 'Search Links' ); ?>:</label>
 	<input type="text" id="link-search-input" name="s" value="<?php _admin_search_query(); ?>" />
 	<input type="submit" value="<?php esc_attr_e( 'Search Links' ); ?>" class="button" />
@@ -53,7 +49,7 @@ if ( isset($_GET['deleted']) ) {
 <br class="clear" />
 
 <form id="posts-filter" action="" method="get">
-	<input type="hidden" name="page" value="<?php echo $current_menu[ 'slug' ]; ?>" />
+	<input type="hidden" name="page" value="<?php echo $ucf_current_menu[ 'slug' ]; ?>" />
 <div class="tablenav">
 
 <?php
@@ -103,21 +99,21 @@ echo $select_order;
 <div class="clear"></div>
 
 <?php
-	$form_columns = get_column_headers('ucf-form-manager');
-	$hidden = get_hidden_columns('ucf-form-manager');
+	$form_columns = get_column_headers( $current_screen );
+	$hidden = get_hidden_columns( $current_screen );
 ?>
 
 <?php wp_nonce_field('bulk-bookmarks') ?>
 <table class="widefat fixed" cellspacing="0">
 	<thead>
 	<tr>
-<?php print_column_headers('ucf-form-manager'); ?>
+<?php print_column_headers( $current_screen ); ?>
 	</tr>
 	</thead>
 
 	<tfoot>
 	<tr>
-<?php print_column_headers('ucf-form-manager', false); ?>
+<?php print_column_headers( $current_screen, false); ?>
 	</tr>
 	</tfoot>
 
@@ -133,8 +129,9 @@ echo $select_order;
 		$style = ($alt % 2) ? '' : ' class="alternate"';
 		++ $alt;
 		$edit_link = UCF_Form::get_edit_form_link( $form );
+		$delete_link = UCF_Form::get_delete_form_link( $form );
 		?><tr id="link-<?php echo $form->form_id; ?>" valign="middle" <?php echo $style; ?>><?php
-		foreach($form_columns as $column_name=>$column_display_name) {
+		foreach( $form_columns as $column_name => $column_display_name ) {
 			$class = "class=\"column-$column_name\"";
 
 			$style = '';
@@ -147,12 +144,11 @@ echo $select_order;
 				case 'cb':
 					echo '<th scope="row" class="check-column"><input type="checkbox" name="linkcheck[]" value="'. esc_attr($form->form_id) .'" /></th>';
 					break;
-				case 'name':
-
-					echo "<td $attributes><strong><a class='row-title' href='$edit_link' title='" . esc_attr(sprintf(__('Edit &#8220;%s&#8221;'), $form->name)) . "'>$form->name</a></strong><br />";
+				case 'form_name':
+					echo "<td $attributes><strong><a class='row-title' href='$edit_link' title='" . esc_attr(sprintf(__('Edit &#8220;%s&#8221;'), $form->form_name)) . "'>$form->form_name</a></strong><br />";
 					$actions = array();
 					$actions['edit'] = '<a href="' . $edit_link . '">' . __('Edit') . '</a>';
-					$actions['delete'] = "<a class='submitdelete' href='" . wp_nonce_url("link.php?action=delete&amp;form_id=$form->form_id", 'delete-bookmark_' . $form->form_id) . "' onclick=\"if ( confirm('" . esc_js(sprintf( __("You are about to delete this link '%s'\n  'Cancel' to stop, 'OK' to delete."), $form->link_name )) . "') ) { return true;}return false;\">" . __('Delete') . "</a>";
+					$actions['delete'] = "<a class='submitdelete' href='" . wp_nonce_url( $delete_link, 'delete-form_' . $form->form_id) . "' onclick=\"if ( confirm('" . esc_js(sprintf( __("You are about to delete this form '%s'\n  'Cancel' to stop, 'OK' to delete."), $form->name )) . "') ) { return true;}return false;\">" . __('Delete') . "</a>";
 					$action_count = count($actions);
 					$i = 0;
 					echo '<div class="row-actions">';
@@ -164,8 +160,8 @@ echo $select_order;
 					echo '</div>';
 					echo '</td>';
 					break;
-				case 'tag':
-					echo "<td $attributes><code>[$form->tag]</code></td>";
+				case 'shortcode':
+					echo "<td $attributes><code>[$form->shortcode]</code></td>";
 					break;
 				case 'mail_to':
 					echo "<td $attributes><a href='mailto:$form->mail_to'>$form->mail_to</a></td>";

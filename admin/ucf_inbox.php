@@ -1,9 +1,8 @@
 <?php
-global $ucf_plugin_admin_menu;
 ?>
 <div class="wrap">
-<?php screen_icon( 'ucf-'.$ucf_current_menu ); ?>
-<h2><?php echo $ucf_plugin_admin_menu[ $ucf_current_menu ][ 'title' ]; ?></h2>
+<?php screen_icon( $ucf_current_menu[ 'slug' ] ); ?>
+<h2><?php echo esc_html( $title ); ?></h2>
 <form method="get" action="http://sandbox2.wordpress.org/wp-admin/edit.php" id="posts-filter">
 
 <ul class="subsubsub">
